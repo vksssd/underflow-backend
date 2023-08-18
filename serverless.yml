@@ -1,0 +1,21 @@
+
+service: serverless-nodejs-app
+
+provider:
+  name: aws # Use Amazon Web Services as the provider
+  runtime: nodejs14.x # Use Node.js version 14.x
+  stage: dev # Deploy to the "dev" stage
+  region: eu-central-1 # Deploy to the EU Central (Frankfurt) region
+
+functions:
+  app: # Function named "app"
+    handler: app.server # Reference the exported "server" method from the "AppJS" file
+    events: # lambda functions are triggered by events
+      - http: #event trigger for the root route of an API Gateway HTTP  "/"
+          path: /
+          method: ANY # Any HTTP method is excepted
+          cors: true # CORS enabler
+      - http: # 
+          path: /{proxy+}
+          method: ANY # Accept any HTTP method
+          cors: true # Enable CORS
